@@ -1,0 +1,28 @@
+local plr = game.Players.LocalPlayer
+local gui = Instance.new("ScreenGui", plr.PlayerGui)
+
+local button = Instance.new("TextButton", gui)
+button.Position = UDim2.new(0, 0, 0.197, 0)
+local textbox = Instance.new("TextBox", gui)
+textbox.Position = UDim2.new(0, 0,0.239, 0)
+
+button.Size = UDim2.new(0.047, 0,0.043, 0)
+textbox.Size = UDim2.new(0.047, 0,0.043, 0)
+button.Text = "press me"
+textbox.PlaceholderText = "target player here"
+
+
+button.MouseButton1Click:Connect(function()
+	print("pressed")
+	local text = string.lower(textbox.Text)
+	if text ~= nil then
+		if game.Players:FindFirstChild(text) then
+			local target = game.Players:FindFirstChild(text)
+			local name = target.Name
+			target.Chatted:Connect(function()
+				wait(0.1)
+				game:GetService('ReplicatedStorage').DefaultChatSystemChatEvents.SayMessageRequest:FireServer("shut up " .. name,'All')
+			end)
+		end
+	end
+end)
